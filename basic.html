@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>Processando o Canvas após a tag</title>
+    </head>
+    <body>
+        <canvas id="meu_canvas" width="400" height="400"></canvas>
+        <script>
+            //referenciando o Canvas
+            var canvas = document.getElementById('meu_canvas');
+
+            //Obtendo o contexto gráfico
+            var context = canvas.getContext('2d');
+
+            //desenhando um retângulo
+            context.fillStyle = 'red';
+            context.fillRect(25, 25, 50, 50);
+
+            //desenhando o contorno de um retângulo
+            context.lineWidth = 3;
+            context.strokeStyle = 'green'
+            context.strokeRect(75, 75, 50, 50);
+
+            //Exemplo teórico
+            //Passo a passo para criar um path:
+
+            //Iniciar novo path (apagando desenhos anteriores)
+            context.beginPath();
+
+            //Aqui faço meu desenho
+            // ...
+
+            //Preencher toda a área desenhada
+            context.fill();
+
+            //Contornar a área desenhada
+            context.stroke();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>Desenhando imagens no canvas</title>
+    </head>
+    <body>
+        <canvas id="meu_canvas" width="500" height="100"></canvas>
+        <script>
+            var canvas = document.getElementById('meu_canvas');
+            var context = canvas.getContext('2d');
+
+            //Exemplo teórico
+            /*
+                //Carregando uma imagem programaticamente
+                var imagem = new Image();
+                imagem.src = 'minha-imagem.png' //gif, jpg...
+
+                //Obtendo de uma imagem na página
+                var imagem = document.getElementById('id_da_tag_img');
+            */
+
+            //Exemplo teórico: aguardando a imagem ter carregado
+            /*
+                imagem.onload = function(){
+                    //aqui trabalhamos a imagem
+                }
+            */
+
+            var imagem = new Image();
+            imagem.src = 'img/ovni.png';
+            imagem.onload = function(){
+                //aqui usaremos drawImage
+                //Começar na posição 20
+                var x = 20;
+
+                //Desenhar as imagens
+                for(var i = 1; i <= 5; i++){
+                    context.drawImage(imagem, x, 20, 64, 32);
+                    x += 70;
+                }
+            }            
+        </script>
+    </body>
+</html>
