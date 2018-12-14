@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>Usando o Request Animation Frame</title>
+    </head>
+    <body>
+        <canvas id="meu_canvas" width="300" height="300"></canvas>
+        <script>
+            var canvas = document.getElementById('meu_canvas');
+            var context = canvas.getContext('2d');
+
+            /*************************
+                //Exemplo teórico
+
+                //Solicito a execução de uma função
+                //Não é preciso qualificar o "window"
+                requestAnimationFrame(minhaFuncao);
+
+                //Função de animação
+                function minhaFuncao(){
+                    //Faço um desenho qualquer
+                    //...
+
+                    //Solicito o próximo ciclo
+                    requestAnimationFrame(minhaFuncao)
+                }
+            **************************/
+
+            //Dados da bola
+            var x = 20;
+            var y = 100;
+            var raio = 5;
+
+            /****************************
+                //Iniciar a animação
+                requestAnimationFrame(mexerBola);
+
+                //Função animação
+                function mexerBola(){
+                    //Aqui uma bolinha se deslocará
+                    
+                    //Limpar o Canvas
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    //Desenhar a bola
+                    context.beginPath();
+                    context.arc(x, y, raio, 0, Math.PI*2);
+                    context.fill();
+
+                    //Deslocar 20 pixels para a direita
+                    y -= 10;
+
+                    //Chamar o próximo ciclo da animação
+                    requestAnimationFrame(mexerBola);
+                }
+            ******************************/
+
+            /****************************
+                //Exemplo teórico
+
+                //Obter o instante atual
+                var agora = new Date().getTime();
+
+                //O instante anterior tem de ter sido preservado anteriormente
+                var anterior = agora; //Foi feito antes
+
+                //Tempo decorrido = diferença
+                var decorrido = agora - anterior;
+
+                //Deslocamento da bolinha
+                var velocidade = 20; //Em pixels por segundo
+                x += velocidade * decorrido / 1000
+            ******************************/
+
+            //Momento inicial
+            var anterior = new Date().getTime();
+
+            //Iniciar a animação
+            requestAnimationFrame(mexerBola);
+
+            //Função animação
+            function mexerBola(){
+                //Limpar o Canvas
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                //Desenhar a bola
+                context.beginPath();
+                context.arc(x, y, raio, 0, Math.PI*2);
+                context.fill();
+
+                //Momento atual
+                var agora = new Date().getTime();
+
+                //Diferença
+                var decorrido = agora - anterior;
+
+                //Deslocar 30 pixels por segundo
+                var velocidade = 30;
+                x += velocidade * decorrido / 1000;
+
+                anterior = agora;
+                requestAnimationFrame(mexerBola);
+            }
+        </script>
+    </body>
+</html>

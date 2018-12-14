@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>Pegando partes de imagem no canvas</title>
+    </head>
+    <body>
+        <ul>
+            <li>CLASSE: um tipo de objetos determinado, composto por atributos e métodos definidos;</li>
+            <li>INSTÂNCIA: cada objeto pertencente a uma determinada classe;</li>
+            <li>ATRIBUTO: cada propriedade dos objetos listada em uma classe;</li>
+            <li>MÉTODO: cada tarefa que um objeto de uma classe pode executar.</li>
+        </ul>
+
+        <canvas id="meu_canvas" width="200" height="200"></canvas>
+        <script>
+            var canvas = document.getElementById('meu_canvas');
+            var context = canvas.getContext('2d');
+
+            function Carro(cor, velMax){
+                //Criando os atributos
+                this.cor = cor;
+                this.velMax = velMax;
+                this.velAtual = 0;
+
+                //Criando um método
+                this.acelerar = function(){
+                    this.velAtual += 10;
+                }
+            }
+
+            //Instanciando objetos da classe Carro
+            var meuCarro = new Carro('vermelho', 250);
+            var oponente = new Carro('Azul', 300);
+
+            //Chamando um método somente em um objeto
+            meuCarro.acelerar();
+
+            //Verificando as velocidades
+            document.write(meuCarro.cor + ': ' + meuCarro.velAtual);
+            document.write('<br/>');
+            document.write(oponente.cor + ': ' + oponente.velAtual);
+        </script>
+    </body>
+</html>
