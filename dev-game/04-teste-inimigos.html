@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inimigos</title>
+    <script src="js/animacao.js"></script>
+    <script src="js/teclado.js"></script>
+    <script src="js/fundo.js"></script>
+    <script src="js/nave.js"></script>
+    <script src="js/tiro.js"></script>
+    <script src="js/colisor.js"></script>
+    <script src="js/ovni.js"></script>
+</head>
+<body>
+    <canvas id="canvas_inimigos" width="500" height="500"></canvas>
+    <script>
+        //Imagens
+        var imgNave = new Image();
+        imgNave.src = 'img/nave.png';
+        imgNave.onload = carregando;
+
+        var imgOvni = new Image();
+        imgOvni.src = 'img/ovni.png';
+        imgOvni.onload = carregando;
+
+        //Inicialização dos objetos
+        var canvas = document.getElementById('canvas_inimigos');
+        var context = canvas.getContext('2d');
+
+        var teclado = new Teclado(document);
+        var animacao = new Animacao(context);
+    </script>
+</body>
+</html>

@@ -7,6 +7,7 @@
     <title>Nave espacial que atira</title>
     <script src="js/animacao.js"></script>
     <script src="js/teclado.js"></script>
+    <script src="js/fundo.js"></script>
     <script src="js/nave.js"></script>
     <script src="js/tiro.js"></script>
 </head>
@@ -25,7 +26,6 @@
         var imgNave = new Image();
         imgNave.src = 'img/nave.png';
         var nave = new Nave(context, teclado, imgNave);
-        animacao.novoSprite(nave);
 
         //Nunca foi tão fácil mandar uma nave atirar!
         teclado.disparou(ESPACO, function(){
@@ -39,6 +39,46 @@
             nave.x = canvas.width / 2 - imgNave.width / 2;
             nave.y = canvas.height - imgNave.height;
             nave.velocidade = 5;
+        }
+
+        //Imagens de Fundo
+        var imgEspaco = new Image();
+        imgEspaco.src = 'img/fundo-espaco.png';
+
+        var imgEstrelas = new Image();
+        imgEstrelas.src = 'img/fundo-estrelas.png';
+
+        var imgNuvens = new Image();
+        imgNuvens.src = 'img/fundo-nuvens.png';
+
+        //funções de Fundo
+        var carregadas = 0;
+        var total = 3;
+
+        imgEspaco.onload = carregando;
+        imgEstrelas.onload = carregando;
+        imgNuvens.onload = carregando;
+
+        function carregando(){
+            carregadas++;
+            if(carregadas == total) iniciar();
+        }
+
+        function iniciar(){
+            //Passar context e a imagem para os objetos Fundo
+            var fundoEspaco = new Fundo(context, imgEspaco);
+            var fundoEstrelas = new Fundo(context, imgEstrelas);
+            var fundoNuvens = new Fundo(context, imgNuvens);
+
+            //Cada um a uma velocidade diferente
+            fundoEspaco.velocidade = 3;
+            fundoEstrelas.velocidade = 7;
+            fundoNuvens.velocidade = 10;
+
+            animacao.novoSprite(fundoEspaco);
+            animacao.novoSprite(fundoEstrelas);
+            animacao.novoSprite(fundoNuvens);
+            animacao.novoSprite(nave);
             animacao.ligar();
         }
     </script>

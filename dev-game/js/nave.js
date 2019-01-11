@@ -11,7 +11,7 @@ Nave.prototype = {
         if(this.teclado.pressionada(SETA_ESQUERDA) && this.x > 0)
             this.x -= this.velocidade;
         
-        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.context.canvas.width - this.imagem.width)
+        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.context.canvas.width - (this.imagem.width + 11))
             this.x += this.velocidade;
 
         if(this.teclado.pressionada(SETA_ACIMA) && this.y > 0)
