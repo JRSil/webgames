@@ -27,5 +27,29 @@ Nave.prototype = {
     atirar: function(){
         var t = new Tiro(this.context, this);
         this.animacao.novoSprite(t);
+        this.colisor.novoSprite(t);
+    },
+    retangulosColisao: function(){
+        //Valores serão ajustados aos poucos
+        var rets = [
+            {x: this.x + 2, y: this.y + 19, largura: 13, altura: 13},
+            {x: this.x + 15, y: this.y + 3, largura: 17, altura: 33},
+            {x: this.x + 32, y: this.y + 19, largura: 13, altura: 13}
+        ];
+
+        //Desenhando os retângulos para visualizacao
+        var ctx = this.context;
+
+        for(var i in rets){
+            ctx.save();
+            ctx.strokeStyle = 'yellow';
+            ctx.strokeRect(rets[i].x, rets[i].y, rets[i].largura, rets[i].altura);
+            ctx.restore();
+        }
+
+        return rets;
+    },
+    colidiuCom: function(){
+
     }
 }

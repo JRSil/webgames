@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Inimigos</title>
-    <script src="js/animacao.js"></script>
+    <script src="js/animacao-alt.js"></script>
     <script src="js/teclado.js"></script>
     <script src="js/fundo.js"></script>
     <script src="js/nave.js"></script>
@@ -25,12 +25,38 @@
         imgOvni.src = 'img/ovni.png';
         imgOvni.onload = carregando;
 
+        var imgEspaco = new Image();
+        imgEspaco.src = 'img/fundo-espaco.png';
+        imgEspaco.onload = carregando;
+
+        var imgEstrelas = new Image();
+        imgEstrelas.src = 'img/fundo-estrelas.png';
+        imgEstrelas.onload = carregando;
+
+        var imgNuvens = new Image();
+        imgNuvens.src = 'img/fundo-nuvens.png';
+        imgNuvens.onload = carregando;
+
         //Inicialização dos objetos
         var canvas = document.getElementById('canvas_inimigos');
         var context = canvas.getContext('2d');
 
         var teclado = new Teclado(document);
         var animacao = new Animacao(context);
+
+        //Passar context e a imagem para os objetos Fundo
+        //Passar velocidades e novo sprite tb
+        var fundoEspaco = new Fundo(context, imgEspaco);
+        fundoEspaco.velocidade = 3;
+        animacao.novoSprite(fundoEspaco);
+
+        var fundoEstrelas = new Fundo(context, imgEstrelas);
+        fundoEstrelas.velocidade = 7;
+        animacao.novoSprite(fundoEstrelas);
+
+        var fundoNuvens = new Fundo(context, imgNuvens);
+        fundoNuvens.velocidade = 10;
+        animacao.novoSprite(fundoNuvens);
 
         var nave = new Nave(context, teclado, imgNave);
         animacao.novoSprite(nave);
@@ -44,10 +70,11 @@
 
         //Carregamento e inicialização
         var carregadas = 0;
+        var total = 5;
 
         function carregando(){
             carregadas++;
-            if(carregadas == 2) iniciar();
+            if(carregadas == total) iniciar();
         }
 
         function iniciar(){
