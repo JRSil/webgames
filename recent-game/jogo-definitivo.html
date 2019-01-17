@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Jogo de Nave</title>
+
+    <script src="js/animacao.js"></script>
+    <script src="js/teclado.js"></script>
+    <script src="js/fundo.js"></script>
+    <script src="js/nave.js"></script>
+    <script src="js/tiro.js"></script>
+    <script src="js/colisor.js"></script>
+    <script src="js/ovni.js"></script>
+</head>
+<body>
+    <canvas id="canvas_animacao" width="500" height="500"></canvas>
+    <script>
+        //Canvas e Context
+        var canvas = document.getElementById('canvas_animacao');
+        var context = canvas.getContext('2d');
+
+        //Variáveis principais
+        var imagens, animacao, teclado, colisor, nave, criadorInimigos;
+        var totalImagens = 0, carregadas = 0;
+
+        //Começa carregando as imagens
+        carregarImagens();
+
+        function carregarImagens() {
+            //Objeto contendo os nomes das imagens
+            imagens = {
+                espaco: 'fundo-espaco.png',
+                estrelas: 'fundo-estrelas.png',
+                nuvens: 'fundo-nuvens.png',
+                nave: 'nave.png',
+                ovni: 'ovni.png'
+            };
+
+            //Carregar todas
+            for(var i in imagens){
+                var img = new Image();
+                img.src = 'img/' + imagens[i];
+                img.onload = carregando;
+                totalImagens++;
+
+                //Substituir o nome pela imagem
+                imagens[i] = img;
+            }
+        }
+
+        function carregando(){
+            carregadas++;
+            if(carregadas == totalImagens) iniciarObjetos();
+        }
+
+        function iniciarObjetos(){
+            //Objetos principais
+        }
+    </script>
+</body>
+</html>
