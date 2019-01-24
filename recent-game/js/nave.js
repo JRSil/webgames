@@ -1,27 +1,45 @@
-function Nave(context, teclado, imagem){
+function Nave(context, teclado, imagem, imgExplosao){
     this.context = context;
     this.teclado = teclado;
     this.imagem = imagem;
     this.x = 0;
     this.y = 0;
     this.velocidade = 0;
+    this.spritesheet = new Spritesheet(context, imagem, 3, 2);
+    this.spritesheet.linha = 0;
+    this.spritesheet.intervalo = 100;
+
+    this.imgExplosao = imgExplosao;
+
+    this.acabaramVidas = null;
+    this.vidasExtras = 3;
 }
 Nave.prototype = {
     atualizar: function(){
+        var incremento = this.velocidade * this.animacao.decorrido / 1000;
+
         if(this.teclado.pressionada(SETA_ESQUERDA) && this.x > 0)
-            this.x -= this.velocidade;
+            this.x -= incremento;
         
-        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.context.canvas.width - (this.imagem.width + 11))
-            this.x += this.velocidade;
+        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.context.canvas.width - 36)
+            this.x += incremento;
 
         if(this.teclado.pressionada(SETA_ACIMA) && this.y > 0)
-            this.y -= this.velocidade;
+            this.y -= incremento;
 
-        if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.context.canvas.height - this.imagem.height)
-            this.y += this.velocidade;
+        if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.context.canvas.height - 48)
+            this.y += incremento;
     },
     desenhar: function(){
-        this.context.drawImage(this.imagem, this.x, this.y, this.imagem.height, this.imagem.height);
+        if(this.teclado.pressionada(SETA_ESQUERDA))
+            this.spritesheet.linha = 1;
+        else if(this.teclado.pressionada(SETA_DIREITA))
+            this.spritesheet.linha = 2;
+        else
+            this.spritesheet.linha = 0;
+
+        this.spritesheet.desenhar(this.x, this.y);
+        this.spritesheet.proximoQuadro();
     },
     //Não esquecer da vírgula quando for criar outro método
     atirar: function(){
@@ -52,9 +70,39 @@ Nave.prototype = {
     colidiuCom: function(outro){
         //Se colidiu com um Ovni
         if(outro instanceof Ovni){
-            //Fim de jogo
-            this.animacao.desligar();
-            alert('GAME OVER');
+            this.animacao.excluirSprite(this);
+            this.animacao.excluirSprite(outro);
+            this.colisor.excluirSprite(this);
+            this.colisor.excluirSprite(outro);
+
+            var exp1 = new Explosao(this.context, this.imgExplosao, this.x, this.y);
+            var exp2 = new Explosao(this.context, this.imgExplosao, this.x, this.y);
+
+            this.animacao.novoSprite(exp1);
+            this.animacao.novoSprite(exp2);
+
+            exp1.fimDaExplosao = function(){
+                // animacao.desligar();
+                // alert('GAME OVER');
+
+                nave.vidasExtras--;
+
+                if(nave.vidasExtras < 0){
+                    if(nave.acabaramVidas) nave.acabaramVidas();
+                }
+                else{
+                    //Recolocar a nave no engine
+                    nave.colisor.novoSprite(nave);
+                    nave.animacao.novoSprite(nave);
+
+                    nave.posicionar();
+                }
+            }
         }
+    },
+    posicionar: function(){
+        var canvas = this.context.canvas;
+        nave.x = canvas.width / 2 - 18; // 36 / 2
+        nave.y = canvas.height - 48;
     }
 }

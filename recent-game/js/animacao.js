@@ -5,6 +5,8 @@ function Animacao(context){
     this.processamentos = [];
     this.spritesExcluir = [];
     this.processamentosExcluir = [];
+    this.ultimoCiclo = 0;
+    this.decorrido = 0;
 }
 Animacao.prototype = {
     novoSprite: function(sprite){
@@ -12,6 +14,7 @@ Animacao.prototype = {
         sprite.animacao = this;
     },
     ligar: function(){
+        this.ultimoCiclo = 0;
         this.ligado = true;
         this.proximoFrame();
     },
@@ -21,6 +24,10 @@ Animacao.prototype = {
     proximoFrame: function(){
         //Posso continuar?
         if(!this.ligado) return ;
+
+        var agora = new Date().getTime();
+        if(this.ultimoCiclo == 0) this.ultimoCiclo = agora;
+        this.decorrido = agora - this.ultimoCiclo;
 
         //Atualizamos o estado dos sprites
         for(var i in this.sprites){
@@ -38,6 +45,9 @@ Animacao.prototype = {
 
         //Processamento de exclusões
         this.processarExclusoes();
+
+        //Atualizar o instante do último ciclo
+        this.ultimoCiclo = agora;
         
         //Chamamos o próximo ciclo
         var animacao = this;
